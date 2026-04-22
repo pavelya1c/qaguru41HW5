@@ -3,8 +3,11 @@ package pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import pages.components.CalendarComponent;
+import pages.components.FormFieldEasyFormComponent;
+import pages.components.FormFieldHardFormComponent;
 
 import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.byLinkText;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -13,23 +16,24 @@ import static com.codeborne.selenide.Selenide.open;
 public class AllPages {
 
     CalendarComponent calendarComponent = new CalendarComponent();
+    FormFieldHardFormComponent formFieldHardFormComponent = new FormFieldHardFormComponent();
+    FormFieldEasyFormComponent formFieldEasyFormComponent = new FormFieldEasyFormComponent();
 
-    SelenideElement firstNameInput = $("#firstName");
-    SelenideElement lastNameInput = $("#lastName");
-    SelenideElement emailInput = $("#userEmail");
-    SelenideElement numberInput = $("#userNumber");
-    SelenideElement genderInput = $("#genterWrapper");
-    SelenideElement submitButton = $("#submit");
-    SelenideElement subjectInput = $(".subjects-auto-complete__input");
-    SelenideElement hobbiesInput = $("#hobbiesWrapper");
-    SelenideElement pictureInput = $("#uploadPicture");
-    SelenideElement currentAdressInput = $("#currentAddress");
-    SelenideElement stateInput = $(".col-md-4.col-sm-12");
-    SelenideElement cityInput = $("#city");
-    SelenideElement userNameInput = $("#userName");
-    SelenideElement permanentAddressInput = $("#permanentAddress");
-    SelenideElement tableOutput = $("#output");
-    SelenideElement userFormTable = $("#userForm");
+    private final SelenideElement firstNameInput = $("#firstName");
+    private final SelenideElement lastNameInput = $("#lastName");
+    private final SelenideElement emailInput = $("#userEmail");
+    private final SelenideElement numberInput = $("#userNumber");
+    private final SelenideElement genderInput = $("#genterWrapper");
+    private final SelenideElement submitButton = $("#submit");
+    private final SelenideElement subjectInput = $(".subjects-auto-complete__input");
+    private final SelenideElement hobbiesInput = $("#hobbiesWrapper");
+    private final SelenideElement pictureInput = $("#uploadPicture");
+    private final SelenideElement currentAdressInput = $("#currentAddress");
+    private final SelenideElement stateInput = $(".col-md-4.col-sm-12");
+    private final SelenideElement cityInput = $("#city");
+    private final SelenideElement userNameInput = $("#userName");
+    private final SelenideElement permanentAddressInput = $("#permanentAddress");
+    private final SelenideElement userFormTable = $("#userForm");
 
 
     public AllPages openPage(String value) {
@@ -75,10 +79,6 @@ public class AllPages {
         return this;
     }
 
-    public AllPages checkFormFieldHardForm(String key, String value) {
-        $(".table-responsive").$(byText(key)).parent().shouldHave(text(value));
-        return this;
-    }
 
     public AllPages typeUserHobbies(String value) {
         hobbiesInput.$(byText(value)).click();
@@ -123,10 +123,6 @@ public class AllPages {
         return this;
     }
 
-    public AllPages checkFormFieldEasyForm(String value) {
-        tableOutput.shouldHave(Condition.text(value));
-        return this;
-    }
 
     public AllPages userFormWasValidatedHardForm() {
         userFormTable.shouldHave(cssClass("was-validated"));
@@ -141,6 +137,16 @@ public class AllPages {
     public AllPages userFormWasValidatedEasyForm() {
         emailInput.shouldHave(cssClass("field-error"))
                 .shouldHave(cssClass("form-control"));
+        return this;
+    }
+
+    public AllPages checkFormFieldHardForm(String key, String value) {
+        formFieldHardFormComponent.FormFieldHardForm(key, value);
+        return this;
+    }
+
+    public AllPages checkFormFieldEasyForm(String value) {
+        formFieldEasyFormComponent.FormFieldEasyForm(value);
         return this;
     }
 
